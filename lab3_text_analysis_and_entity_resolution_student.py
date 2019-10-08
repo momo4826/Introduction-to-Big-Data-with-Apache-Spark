@@ -401,4 +401,23 @@ def fmeasure(threshold):
     p = precision(threshold)
     return 2 * r * p / (r + p)
 
+thresholds = [float(n) / nthresholds for n in range(0, nthresholds)]
+falseposDict = dict([(t, falsepos(t)) for t in thresholds])
+falsenegDict = dict([(t, falseneg(t)) for t in thresholds])
+trueposDict = dict([(t, truepos(t)) for t in thresholds])
 
+precisions = [precision(t) for t in thresholds]
+recalls = [recall(t) for t in thresholds]
+fmeasures = [fmeasure(t) for t in thresholds]
+
+print precisions[0], fmeasures[0]
+assert (abs(precisions[0] - 0.000532546802671) < 0.0000001)
+assert (abs(fmeasures[0] - 0.00106452669505) < 0.0000001)
+
+
+fig = plt.figure()
+plt.plot(thresholds, precisions)
+plt.plot(thresholds, recalls)
+plt.plot(thresholds, fmeasures)
+plt.legend(['Precision', 'Recall', 'F-measure'])
+pass
